@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cherimoya — Casablanca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --beige: #EAE0C8;
+    --beige-deep: #DCCEA8;
+    --cream: #F8F2E2;
+    --green-deep: #306E13;
+    --green-mid: #6E9959;
+    --green-soft: #A1BD94;
+    --ink: #2B2620;
+    --gold: #A8823F;
+    --line: rgba(43,38,32,0.12);
+    --radius-lg: 28px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--beige);
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3, .display{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  img{ max-width: 100%; display:block; }
+
+  .wrap{
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- scale texture (signature motif) ---------- */
+  .scale-band{
+    height: 46px;
+    width: 100%;
+    background-color: var(--green-deep);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='46' viewBox='0 0 64 46'%3E%3Cpath d='M0 46 C 0 20, 12 0, 32 0 C 52 0, 64 20, 64 46 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='46' viewBox='0 0 64 46'%3E%3Cpath d='M0 46 C 0 20, 12 0, 32 0 C 52 0, 64 20, 64 46 Z'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: 64px 46px;
+    mask-size: 64px 46px;
+  }
+  .scale-band.flip{ transform: scaleY(-1); }
+  .scale-band.small{ height: 26px; }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(234,224,200,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+  }
+  .logo-img{
+    height: 34px;
+    width: auto;
+    display:block;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap: 36px;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  .nav-links a{ opacity: 0.8; transition: opacity 0.2s; }
+  .nav-links a:hover{ opacity: 1; }
+  .nav-phone{
+    color: var(--green-deep);
+    font-weight: 700;
+    opacity: 1 !important;
+  }
+  .menu-btn{
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 11px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .menu-btn:hover{ background: var(--ink); transform: translateY(-1px); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    padding: 84px 0 0;
+    background: var(--beige);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+    padding-bottom: 70px;
+  }
+  .eyebrow{
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-size: clamp(3rem, 6vw, 4.6rem);
+    color: var(--green-deep);
+    line-height: 0.98;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero p.lede{
+    margin-top: 24px;
+    max-width: 430px;
+    font-size: 1.08rem;
+    color: rgba(43,38,32,0.78);
+  }
+  .hero-cta{
+    margin-top: 34px;
+    display:flex;
+    gap: 16px;
+    align-items:center;
+  }
+  .btn-outline{
+    border: 1.5px solid var(--green-deep);
+    color: var(--green-deep);
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: transparent;
+    font-family: 'Manrope', sans-serif;
+    transition: all 0.25s ease;
+  }
+  .btn-outline:hover{ background: var(--green-deep); color: var(--cream); }
+  .hero-note{
+    font-size: 0.85rem;
+    color: rgba(43,38,32,0.55);
+  }
+  .hero-image-wrap{
+    position: relative;
+  }
+  .hero-image-wrap img{
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 60px -20px rgba(68,86,53,0.4);
+  }
+  .hero-image-wrap::after{
+    content: "";
+    position: absolute;
+    inset: -16px;
+    border: 1.5px solid var(--green-mid);
+    border-radius: 34px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ---------- about ---------- */
+  .about{
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 90px 0 100px;
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about h2{
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    color: var(--cream);
+  }
+  .about-copy p{
+    color: rgba(248,242,226,0.82);
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+  }
+  .about-copy p:last-child{ margin-bottom: 0; }
+  .stat-row{
+    display:flex;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .stat{
+    border-left: 2px solid var(--green-soft);
+    padding-left: 16px;
+  }
+  .stat .num{
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    display:block;
+  }
+  .stat .label{
+    font-size: 0.82rem;
+    color: rgba(248,242,226,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- signature: cross-section strip ---------- */
+  .signature{
+    background: var(--cream);
+    padding: 100px 0;
+    text-align: center;
+  }
+  .signature .eyebrow{ justify-content:center; display:flex; }
+  .signature h2{
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    color: var(--green-deep);
+    max-width: 640px;
+    margin: 0 auto 50px;
+  }
+  .cross-row{
+    display:flex;
+    justify-content:center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .cross-card{
+    width: 200px;
+    background: var(--beige);
+    border-radius: 20px;
+    padding: 28px 20px 24px;
+    position: relative;
+  }
+  .cross-card .badge{
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--cream) 0%, var(--cream) 34%, var(--green-mid) 36%, var(--green-mid) 100%);
+    position: relative;
+  }
+  .cross-card .badge::before, .cross-card .badge::after{
+    content:"";
+    position:absolute;
+    width: 5px; height: 8px;
+    background: var(--ink);
+    border-radius: 50%;
+    top: 46%;
+  }
+  .cross-card .badge::before{ left: 40%; transform: rotate(-15deg);}
+  .cross-card .badge::after{ left: 55%; transform: rotate(20deg);}
+  .cross-card h3{
+    font-size: 1.05rem;
+    color: var(--green-deep);
+    margin-bottom: 8px;
+  }
+  .cross-card p{
+    font-size: 0.88rem;
+    color: rgba(43,38,32,0.65);
+  }
+
+  /* ---------- location ---------- */
+  .location{
+    background: var(--beige-deep);
+    padding: 90px 0 100px;
+  }
+  .location-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .location h2{
+    font-size: clamp(2rem, 3.6vw, 2.7rem);
+    color: var(--green-deep);
+    margin-bottom: 22px;
+  }
+  .location-detail{
+    display:flex;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .location-detail .dot{
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .location-detail div span{
+    display:block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green-mid);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .map-card{
+    background: var(--green-deep);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 22px;
+  }
+  .map-embed{
+    width: 100%;
+    height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    filter: grayscale(0.15) saturate(1.05);
+    border: 1px solid rgba(248,242,226,0.15);
+  }
+  .map-card .pin{
+    width: 46px; height: 46px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--gold);
+    transform: rotate(-45deg);
+    margin-bottom: 30px;
+  }
+  .map-card a{
+    font-weight: 700;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    border-bottom: 1.5px solid var(--gold);
+    padding-bottom: 3px;
+    width: fit-content;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background: var(--ink);
+    color: rgba(248,242,226,0.6);
+    padding: 46px 0;
+    text-align:center;
+    font-size: 0.85rem;
+  }
+  footer strong{ color: var(--cream); }
+
+  /* ---------- menu overlay ---------- */
+  .menu-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--cream);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    overflow-y: auto;
+  }
+  .menu-overlay.open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .menu-inner{
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 50px 32px 100px;
+  }
+  .menu-top{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .menu-top .eyebrow{ margin-bottom: 0; }
+  .close-btn{
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--green-deep);
+    background: transparent;
+    color: var(--green-deep);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: all 0.2s ease;
+  }
+  .close-btn:hover{ background: var(--green-deep); color: var(--cream); }
+  .menu-inner h2{
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: var(--green-deep);
+    margin-bottom: 40px;
+  }
+  .menu-category-head{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .menu-category-head h3{
+    font-size: 1.4rem;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .menu-category-head .rule{
+    flex:1;
+    height: 1px;
+    background: var(--line);
+  }
+  .menu-note{
+    font-size: 0.88rem;
+    font-style: italic;
+    color: rgba(43,38,32,0.55);
+    margin: -8px 0 18px;
+  }
+  .menu-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+  .menu-item{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .menu-item:last-child{ border-bottom: none; }
+  @media (max-width: 560px){
+    .menu-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- menu tabs ---------- */
+  .menu-tabs{
+    display:flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    margin-bottom: 34px;
+    border-bottom: 1px solid var(--line);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .menu-tabs::-webkit-scrollbar{ display:none; }
+  .menu-tab{
+    flex-shrink: 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--green-deep);
+    background: transparent;
+    border: 1.5px solid var(--line);
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .menu-tab:hover{ border-color: var(--green-mid); }
+  .menu-tab.active{
+    background: var(--green-deep);
+    border-color: var(--green-deep);
+    color: var(--cream);
+  }
+  .menu-panel{ display:none; animation: fadeIn 0.25s ease; }
+  .menu-panel.active{ display:block; }
+  @keyframes fadeIn{
+    from{ opacity: 0; transform: translateY(6px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- price table (tacos) ---------- */
+  .price-table{
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .price-table th{
+    text-align: right;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--green-mid);
+    font-weight: 700;
+    padding-bottom: 12px;
+  }
+  .price-table th:first-child{ text-align: left; }
+  .price-table td{
+    padding: 13px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 0.98rem;
+  }
+  .price-table tr:last-child td{ border-bottom: none; }
+  .price-table td:first-child{
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .price-table td:not(:first-child){
+    text-align: right;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  @media (max-width: 560px){
+    .price-table{ font-size: 0.85rem; }
+    .price-table th, .price-table td{ padding: 10px 0; }
+  }
+  .menu-item .seed-mark{
+    width: 7px; height: 10px;
+    background: var(--green-mid);
+    border-radius: 60% 60% 60% 60% / 70% 70% 50% 50%;
+    flex-shrink: 0;
+  }
+  .menu-item .item-name{
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-transform: capitalize;
+  }
+  .menu-item .dots{
+    flex: 1;
+    border-bottom: 1px dotted rgba(43,38,32,0.25);
+    transform: translateY(-5px);
+  }
+  .menu-item .item-price{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .hero-grid, .about-grid, .location-grid{
+      grid-template-columns: 1fr;
+    }
+    .hero-grid{ padding-bottom: 50px; }
+    .about-grid{ gap: 34px; }
+    .nav-links{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><img src="cherimoya-logo-final.png" alt="Cherimoya" class="logo-img"></div>
+    <div class="nav-links">
+      <a href="#about">Notre histoire</a>
+      <a href="#location">Nous trouver</a>
+      <a href="tel:0520284074" class="nav-phone">☎ 05 20 28 40 74</a>
+    </div>
+    <button class="menu-btn" onclick="openMenu()">Voir le menu</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Casablanca · Cuisine de saison</div>
+      <h1>La douceur d'un<br><em>fruit rare</em>,<br>servie à table.</h1>
+      <p class="lede">Cherimoya tient son nom du fruit à l'écorce écailleuse et à la chair crémeuse — une inspiration qui infuse notre décor, nos couleurs et notre carte, entre tacos généreux et jus fraîchement pressés.</p>
+      <div class="hero-cta">
+        <button class="btn-outline" onclick="openMenu()">Découvrir le menu</button>
+      </div>
+      <p class="hero-note" style="margin-top:22px;">Ouvert tous les jours · JF5H+9R5, Casablanca</p>
+    </div>
+    <div class="hero-image-wrap">
+      <img src="cherimoya-hero.png" alt="Fruits de cherimoya entiers et coupés en deux sur une assiette">
+    </div>
+  </div>
+  <div class="scale-band"></div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <h2>Une écorce discrète,<br>un cœur généreux.</h2>
+    <div class="about-copy">
+      <p>Comme le fruit qui nous a inspirés, l'expérience Cherimoya se révèle couche après couche : une façade sobre en vert profond et beige chaud, et à l'intérieur, une cuisine chaleureuse pensée pour être partagée.</p>
+      <p>Nos tacos sont préparés à la commande, nos jus pressés le jour même. Pas de superflu, pas de complication — juste des produits bien choisis et bien traités.</p>
+      <div class="stat-row">
+        <div class="stat"><span class="num">14</span><span class="label">Catégories au menu</span></div>
+        <div class="stat"><span class="num">100+</span><span class="label">Recettes signature</span></div>
+        <div class="stat"><span class="num">100%</span><span class="label">Préparé sur place</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="signature">
+  <div class="wrap">
+    <div class="eyebrow">Ce qui nous distingue</div>
+    <h2>Chaque assiette a sa propre coupe, comme le fruit qu'on ouvre en deux.</h2>
+    <div class="cross-row">
+      <div class="cross-card">
+        <div class="badge"></div>
+        <h3>Fraîcheur</h3>
+        <p>Ingrédients choisis chaque matin, sans détour.</p>
+      </div>
+      <div class="cross-card">
+        <div class="badge"></div>
+        <h3>Plat traditionel</h3>
+        <p>Des recettes ancrées dans la tradition marocaine.</p>
+      </div>
+      <div class="cross-card">
+        <div class="badge"></div>
+        <h3>Générosité</h3>
+        <p>Des portions pensées pour être partagées à table.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="wrap location-grid">
+    <div>
+      <div class="eyebrow">Nous trouver</div>
+      <h2>Venez goûter<br>sur place</h2>
+      <div class="location-detail">
+        <span class="dot"></span>
+        <div><span>Adresse</span>JF5H+9R5, Casablanca 20250</div>
+      </div>
+      <div class="location-detail">
+        <span class="dot"></span>
+        <div><span>Horaires</span>Tous les jours, 11h00 – 23h00</div>
+      </div>
+      <div class="location-detail">
+        <span class="dot"></span>
+        <div><span>Téléphone</span><a href="tel:0520284074">05 20 28 40 74</a></div>
+      </div>
+      <div class="location-detail">
+        <span class="dot"></span>
+        <div><span>Ambiance</span>Vert profond, beige chaud, lumière naturelle</div>
+      </div>
+    </div>
+    <div class="map-card">
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=JF5H%2B9R5+Casablanca&output=embed"
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" title="Localisation Cherimoya sur la carte">
+        </iframe>
+      </div>
+      <div>
+        <p style="margin-bottom:6px; font-weight:600; color: var(--cream);">JF5H+9R5</p>
+        <p style="color: rgba(248,242,226,0.7); font-size:0.92rem; margin-bottom:22px;">Casablanca 20250, Maroc</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=JF5H%2B9R5%20Casablanca" target="_blank" rel="noopener">Voir l'itinéraire →</a>
+        <a href="tel:0520284074" style="margin-top:14px;">☎ 05 20 28 40 74</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Cherimoya</strong> — Casablanca, 20250 · JF5H+9R5 · <a href="tel:0520284074">05 20 28 40 74</a>
+</footer>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <div class="menu-inner">
+    <div class="menu-top">
+      <div class="eyebrow">Cherimoya · Carte</div>
+      <button class="close-btn" onclick="closeMenu()" aria-label="Fermer le menu">✕</button>
+    </div>
+    <h2>Notre menu</h2>
+
+    <div class="menu-tabs" id="menuTabs">
+        <button class="menu-tab active" data-cat="salad" onclick="showCategory('salad')">Salades</button>
+        <button class="menu-tab" data-cat="panini" onclick="showCategory('panini')">Panini</button>
+        <button class="menu-tab" data-cat="sandwiches" onclick="showCategory('sandwiches')">Sandwiches</button>
+        <button class="menu-tab" data-cat="pasticcio" onclick="showCategory('pasticcio')">Pasticcio</button>
+        <button class="menu-tab" data-cat="entrees-chaudes" onclick="showCategory('entrees-chaudes')">Entrées chaudes</button>
+        <button class="menu-tab" data-cat="burger" onclick="showCategory('burger')">Burger</button>
+        <button class="menu-tab" data-cat="plat" onclick="showCategory('plat')">Plats</button>
+        <button class="menu-tab" data-cat="tajines" onclick="showCategory('tajines')">Nos tajines</button>
+        <button class="menu-tab" data-cat="tacos" onclick="showCategory('tacos')">Tacos</button>
+        <button class="menu-tab" data-cat="pizza" onclick="showCategory('pizza')">Pizza</button>
+        <button class="menu-tab" data-cat="pates" onclick="showCategory('pates')">Pâtes</button>
+        <button class="menu-tab" data-cat="supplements" onclick="showCategory('supplements')">Suppléments</button>
+        <button class="menu-tab" data-cat="jus" onclick="showCategory('jus')">Jus</button>
+        <button class="menu-tab" data-cat="desserts" onclick="showCategory('desserts')">Desserts</button>
+    </div>
+
+    <div class="menu-panels" id="menuPanelsWrap">
+      <div class="menu-panel active" id="panel-salad">
+        <div class="menu-category-head">
+          <h3>Salades</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Marocaine</span><span class="dots"></span><span class="item-price">27 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">César</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Royal Cesar</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruits de mer</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Cherimoya</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Avocat crevettes</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-panini">
+        <div class="menu-category-head">
+          <h3>Panini</h3>
+          <div class="rule"></div>
+        </div>
+        
+        <div class="menu-grid">
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Thon</span><span class="dots"></span><span class="item-price">28 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Charcuterie</span><span class="dots"></span><span class="item-price">28 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fromage</span><span class="dots"></span><span class="item-price">28 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poulet</span><span class="dots"></span><span class="item-price">28 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Viande hachée</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Saucisse de viande</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Saucisse de foie</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Crevette</span><span class="dots"></span><span class="item-price">35 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Mixte</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-sandwiches">
+        <div class="menu-category-head">
+          <h3>Sandwiches</h3>
+          <div class="rule"></div>
+        </div>
+        
+        <div class="menu-grid">
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Thon</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Charcuterie</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poulet</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Viande hachée</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Saucisse de viande</span><span class="dots"></span><span class="item-price">35 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Saucisse de foie</span><span class="dots"></span><span class="item-price">35 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruit de mer</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Mixte</span><span class="dots"></span><span class="item-price">36 DH</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-pasticcio">
+        <div class="menu-category-head">
+          <h3>Pasticcio</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Charcuterie</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poulet</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Viande hachée</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Mixte</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruit de mer</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-entrees-chaudes">
+        <div class="menu-category-head">
+          <h3>Entrées chaudes</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Gratin viande hachée</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Gratin poulet</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Gratin mixte</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Gratin fruits de mer</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-burger">
+        <div class="menu-category-head">
+          <h3>Burger</h3>
+          <div class="rule"></div>
+        </div>
+        <p class="menu-note">Servi avec frites et boisson</p>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Cheese burger</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Chicken burger</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Cordon bleu</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Royal cheese</span><span class="dots"></span><span class="item-price">48 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Royal chicken</span><span class="dots"></span><span class="item-price">48 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Burger royal</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-plat">
+        <div class="menu-category-head">
+          <h3>Plats</h3>
+          <div class="rule"></div>
+        </div>
+        
+        <div class="menu-grid">
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Chicken à la sauce champignon</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Chicken à la sauce blanche</span><span class="dots"></span><span class="item-price">43 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Chicken légumes sautés</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Chicken carbonara</span><span class="dots"></span><span class="item-price">50 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Brochettes saucisses de foie</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Brochettes saucisses de viande</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Brochettes de viande</span><span class="dots"></span><span class="item-price">60 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Brochettes viande hachée</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Brochettes de poulet</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Plat mixte grillé</span><span class="dots"></span><span class="item-price">65 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Plat émincé de poulet</span><span class="dots"></span><span class="item-price">60 DH</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-tajines">
+        <div class="menu-category-head">
+          <h3>Nos tajines</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tajine viande hachée</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tajine crevette</span><span class="dots"></span><span class="item-price">35 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tajine fruit de mer</span><span class="dots"></span><span class="item-price">45 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tajine mixte</span><span class="dots"></span><span class="item-price">40 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-tacos">
+        <div class="menu-category-head">
+          <h3>Tacos</h3>
+          <div class="rule"></div>
+        </div>
+        <table class="price-table">
+          <thead>
+            <tr><th>Article</th><th>Simple</th><th>Avec frites</th><th>Menu</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Poulet</td><td>30 DH</td><td>35 DH</td><td>40 DH</td></tr>
+            <tr><td>Viande hachée</td><td>32 DH</td><td>37 DH</td><td>42 DH</td></tr>
+            <tr><td>Nugget</td><td>32 DH</td><td>37 DH</td><td>42 DH</td></tr>
+            <tr><td>Mixte</td><td>37 DH</td><td>42 DH</td><td>49 DH</td></tr>
+            <tr><td>Cordon bleu</td><td>35 DH</td><td>40 DH</td><td>47 DH</td></tr>
+            <tr><td>Cherimoya</td><td>42 DH</td><td>47 DH</td><td>52 DH</td></tr>
+            <tr><td>Fruit de mer</td><td>37 DH</td><td>42 DH</td><td>48 DH</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="menu-panel" id="panel-pizza">
+        <div class="menu-category-head">
+          <h3>Pizza</h3>
+          <div class="rule"></div>
+        </div>
+        
+        <div class="menu-grid">
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Margherita</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Thon</span><span class="dots"></span><span class="item-price">32 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Viande hachée</span><span class="dots"></span><span class="item-price">35 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poulet</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Charcuterie</span><span class="dots"></span><span class="item-price">32 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Végétarienne</span><span class="dots"></span><span class="item-price">33 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">4 fromages</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">4 saisons</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruit de mer</span><span class="dots"></span><span class="item-price">48 DH</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-pates">
+        <div class="menu-category-head">
+          <h3>Pâtes</h3>
+          <div class="rule"></div>
+        </div>
+        <p class="menu-note">Penne · Tagliatelle · Spaghetti</p>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Bolognaise</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Carbonara</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poulet champignons</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Quatre fromages</span><span class="dots"></span><span class="item-price">42 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruit de mer</span><span class="dots"></span><span class="item-price">48 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Spécial cherimoya</span><span class="dots"></span><span class="item-price">55 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-supplements">
+        <div class="menu-category-head">
+          <h3>Suppléments</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Légumes</span><span class="dots"></span><span class="item-price">20 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Pâtes</span><span class="dots"></span><span class="item-price">25 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fromages</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Charcuterie</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Sauce</span><span class="dots"></span><span class="item-price">4 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">6 pièces nuggets</span><span class="dots"></span><span class="item-price">20 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">10 pièces nuggets</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+      </div>
+
+      <div class="menu-panel" id="panel-jus">
+        <div class="menu-category-head">
+          <h3>Jus</h3>
+          <div class="rule"></div>
+        </div>
+        
+        <div class="menu-grid">
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Banane</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Pomme</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Orange</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Citron</span><span class="dots"></span><span class="item-price">12 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Avocat</span><span class="dots"></span><span class="item-price">20 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Panaché</span><span class="dots"></span><span class="item-price">15 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Papaye</span><span class="dots"></span><span class="item-price">15 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Pêche</span><span class="dots"></span><span class="item-price">16 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Poire</span><span class="dots"></span><span class="item-price">16 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Kiwi</span><span class="dots"></span><span class="item-price">16 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Kaki</span><span class="dots"></span><span class="item-price">16 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fraise</span><span class="dots"></span><span class="item-price">19 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Mangue</span><span class="dots"></span><span class="item-price">19 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Ananas</span><span class="dots"></span><span class="item-price">19 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Royal</span><span class="dots"></span><span class="item-price">25 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Ferma</span><span class="dots"></span><span class="item-price">19 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Cherimoya</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Dragon</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Zaazaa (petit)</span><span class="dots"></span><span class="item-price">28 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Zaazaa (grand)</span><span class="dots"></span><span class="item-price">38 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Fruit rouge</span><span class="dots"></span><span class="item-price">30 DH</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-desserts">
+        <div class="menu-category-head">
+          <h3>Desserts</h3>
+          <div class="rule"></div>
+        </div>
+        
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Flan royal</span><span class="dots"></span><span class="item-price">15 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Mhalabia</span><span class="dots"></span><span class="item-price">14 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tarte de chef</span><span class="dots"></span><span class="item-price">14 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Tiramisu</span><span class="dots"></span><span class="item-price">15 DH</span></div>
+          <div class="menu-item"><span class="seed-mark"></span><span class="item-name">Salade fruits</span><span class="dots"></span><span class="item-price">20 DH</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openMenu(){
+    document.getElementById('menuOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    document.getElementById('menuOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function showCategory(id){
+    document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelectorAll('.menu-tab').forEach(function(t){ t.classList.remove('active'); });
+    var panel = document.getElementById('panel-' + id);
+    var tab = document.querySelector('.menu-tab[data-cat="' + id + '"]');
+    if(panel) panel.classList.add('active');
+    if(tab){
+      tab.classList.add('active');
+      tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+    document.getElementById('menuPanelsWrap').scrollTop = 0;
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+</script>
+
+</body>
+</html>
